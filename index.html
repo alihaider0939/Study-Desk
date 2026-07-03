@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyDesk AI — Local Focus & Posture Analytics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon"></div>
+                <span class="brand-name">StudyDesk AI</span>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-target="dashboard">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                    Dashboard
+                </button>
+                <button class="nav-item" data-target="reports">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                    Reports
+                </button>
+                <button class="nav-item" data-target="achievements">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    Achievements
+                </button>
+                <button class="nav-item" data-target="settings">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    Settings
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="app-version">v1.0.0 (Local-Only)</div>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-github">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    GitHub Project
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-nav">
+                <div class="meta-info">
+                    <span id="nav-date" class="meta-date">July 3, 2026</span>
+                    <span id="nav-clock" class="meta-clock">00:00:00</span>
+                </div>
+                <div class="session-controls">
+                    <div id="session-duration-display" class="session-timer">00:00:00</div>
+                    <button id="btn-start" class="btn btn-primary">Start Session</button>
+                    <button id="btn-pause" class="btn btn-secondary" disabled>Pause</button>
+                    <button id="btn-resume" class="btn btn-secondary hidden">Resume</button>
+                    <button id="btn-end" class="btn btn-danger" disabled>End Session</button>
+                </div>
+            </header>
+
+            <div class="view-container">
+                
+                <section id="view-dashboard" class="view-pane active">
+                    <div class="dashboard-grid">
+                        
+                        <div class="grid-col-left">
+                            <div class="card feed-card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Live Vision Feed</h3>
+                                    <div class="badge-status status-offline" id="ai-presence-badge">Offline</div>
+                                </div>
+                                <div class="webcam-viewport">
+                                    <video id="webcam-video" autoplay playsinline muted></video>
+                                    <div id="webcam-placeholder" class="webcam-placeholder">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                                        <span>Camera feed inactive. Start session to stream.</span>
+                                    </div>
+                                    <div class="video-overlay-metrics">
+                                        <div class="overlay-tag">Gaze: <span id="overlay-gaze">N/A</span></div>
+                                        <div class="overlay-tag">Posture: <span id="overlay-posture">N/A</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="analytics-subgrid">
+                                <div class="card metric-card">
+                                    <div class="metric-title">Study Time</div>
+                                    <div class="metric-value" id="m-study-time">00m 00s</div>
+                                    <div class="metric-trend up">Total accumulated</div>
+                                </div>
+                                <div class="card metric-card">
+                                    <div class="metric-title">Active Focus Time</div>
+                                    <div class="metric-value" id="m-focus-time">00m 00s</div>
+                                    <div class="metric-progress-wrapper"><div class="metric-progress-bar" id="p-focus-time" style="width: 0%"></div></div>
+                                </div>
+                                <div class="card metric-card">
+                                    <div class="metric-title">Distraction Time</div>
+                                    <div class="metric-value" id="m-distraction-time">00m 00s</div>
+                                    <div class="metric-progress-wrapper"><div class="metric-progress-bar bg-danger" id="p-distraction-time" style="width: 0%"></div></div>
+                                </div>
+                                <div class="card metric-card">
+                                    <div class="metric-title">Focus Streak</div>
+                                    <div class="metric-value" id="m-focus-streak">0m</div>
+                                    <div class="metric-trend" id="m-long-streak">Max: 0m</div>
+                                </div>
+                                <div class="card metric-card">
+                                    <div class="metric-title">Blink Rate</div>
+                                    <div class="metric-value" id="m-blink-rate">0 <span class="unit">/min</span></div>
+                                    <div class="metric-trend" id="m-eye-closure">Normal closure</div>
+                                </div>
+                                <div class="card metric-card">
+                                    <div class="metric-title">Away & Breaks</div>
+                                    <div class="metric-value" id="m-breaks">0 <span class="unit">breaks</span></div>
+                                    <div class="metric-trend" id="m-away-time">Away: 0s</div>
+                                </div>
+                            </div>
+
+                            <div class="features-row">
+                                <div class="card diagnostic-card">
+                                    <h4>Gaze & Attention</h4>
+                                    <ul class="diagnostic-list">
+                                        <li id="f-gaze-screen"><span>Looking at screen</span><div class="indicator"></div></li>
+                                        <li id="f-gaze-away"><span>Looking away / left / right</span><div class="indicator"></div></li>
+                                        <li id="f-face-detected"><span>Face detected</span><div class="indicator"></div></li>
+                                    </ul>
+                                </div>
+                                <div class="card diagnostic-card">
+                                    <h4>Posture Telemetry</h4>
+                                    <ul class="diagnostic-list">
+                                        <li id="f-posture-good"><span>Optimal Alignment</span><div class="indicator"></div></li>
+                                        <li id="f-posture-slouch"><span>Slouching / Leaning</span><div class="indicator"></div></li>
+                                        <li id="f-posture-score"><span>Score Baseline</span><span class="text-value" id="v-posture-score">100%</span></li>
+                                    </ul>
+                                </div>
+                                <div class="card diagnostic-card">
+                                    <h4>Environmental Guards</h4>
+                                    <ul class="diagnostic-list text-muted">
+                                        <li><span>Phone Interaction</span><span class="badge-lock">Ready</span></li>
+                                        <li><span>Multi-person detection</span><span class="badge-lock">Ready</span></li>
+                                        <li><span>Background anomalies</span><span class="badge-lock">Ready</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid-col-right">
+                            <div class="card chart-card">
+                                <div class="card-header"><h3 class="card-title">Realtime Engine Vectors</h3></div>
+                                <div class="rings-container">
+                                    <div class="ring-box">
+                                        <div class="custom-ring" id="ring-focus" style="--percent: 0; --color: #2563EB;">
+                                            <div class="ring-inner"><span id="v-ring-focus">0%</span></div>
+                                        </div>
+                                        <span class="ring-label">Focus Score</span>
+                                    </div>
+                                    <div class="ring-box">
+                                        <div class="custom-ring" id="ring-prod" style="--percent: 0; --color: #10B981;">
+                                            <div class="ring-inner"><span id="v-ring-prod">0%</span></div>
+                                        </div>
+                                        <span class="ring-label">Productivity</span>
+                                    </div>
+                                </div>
+
+                                <div class="native-bar-chart-wrapper">
+                                    <div class="bar-chart-labels"><span>Focus vs Distraction</span></div>
+                                    <div class="progress-composite">
+                                        <div class="comp-segment bg-primary" id="bar-comp-focus" style="width: 50%"></div>
+                                        <div class="comp-segment bg-danger" id="bar-comp-distract" style="width: 50%"></div>
+                                    </div>
+                                    <div class="comp-legend">
+                                        <span><span class="dot bg-primary"></span> Focus</span>
+                                        <span><span class="dot bg-danger"></span> Distraction</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card timeline-card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Telemetry System Log</h3>
+                                </div>
+                                <div class="timeline-log" id="timeline-stream">
+                                    <div class="timeline-placeholder">No active session telemetry logs.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section id="view-reports" class="view-pane">
+                    <div class="report-wrapper card">
+                        <div class="report-header">
+                            <div>
+                                <h2 class="report-main-title">Session Analytical Report</h2>
+                                <p class="text-muted" id="rep-timestamp">Generated on session termination</p>
+                            </div>
+                            <div class="report-actions">
+                                <button class="btn btn-secondary" id="btn-print-report">Print Report</button>
+                                <button class="btn btn-primary" id="btn-export-json">Export Dataset JSON</button>
+                            </div>
+                        </div>
+                        
+                        <hr class="divider">
+
+                        <div class="report-summary-grid">
+                            <div class="rep-stat-box">
+                                <span class="rep-lbl">Session Duration</span>
+                                <span class="rep-val" id="rep-duration">00:00:00</span>
+                            </div>
+                            <div class="rep-stat-box">
+                                <span class="rep-lbl">Mean Focus Score</span>
+                                <span class="rep-val text-primary" id="rep-focus-score">0%</span>
+                            </div>
+                            <div class="rep-stat-box">
+                                <span class="rep-lbl">Productivity Index</span>
+                                <span class="rep-val" id="rep-prod-score">0%</span>
+                            </div>
+                            <div class="rep-stat-box">
+                                <span class="rep-lbl">Posture Compliance</span>
+                                <span class="rep-val" id="rep-posture">0%</span>
+                            </div>
+                            <div class="rep-stat-box">
+                                <span class="rep-lbl">Blink Metric Rate</span>
+                                <span class="rep-val" id="rep-blink">0/min</span>
+                            </div>
+                            <div class="rep-stat-box">
+                                <span class="rep-lbl">Max Focus Streak</span>
+                                <span class="rep-val" id="rep-streak">0 mins</span>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 24px; margin-bottom: 12px; font-weight: 600;">Historical Analytical Profiles</h3>
+                        <div class="historical-visuals">
+                            <div>
+                                <h4 class="chart-sub-title">Weekly System Engagement Heatmap</h4>
+                                <div class="heatmap" id="heatmap-grid"></div>
+                            </div>
+                            <div>
+                                <h4 class="chart-sub-title">Daily Study Tracking Allocation (Hours)</h4>
+                                <div class="bar-chart-container" id="daily-bar-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="view-achievements" class="view-pane">
+                    <div class="achievements-header">
+                        <h2>System Milestones & Achievements</h2>
+                        <p class="text-muted">Local focus execution triggers dynamic unlocks.</p>
+                    </div>
+                    <div class="achievements-grid" id="achievements-container">
+                        </div>
+                </section>
+
+                <section id="view-settings" class="view-pane">
+                    <div class="card settings-card">
+                        <h2 style="margin-bottom: 16px; font-weight: 600;">System Preferences</h2>
+                        <form id="settings-form">
+                            <div class="form-group">
+                                <label class="form-label" for="set-study-goal">Target Session Focus Goal (Minutes)</label>
+                                <input type="number" id="set-study-goal" class="form-control" value="45">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="set-daily-target">Daily Tracking Runtime Target (Hours)</label>
+                                <input type="number" id="set-daily-target" class="form-control" value="4">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="set-alert-duration">Distraction Alert Trigger Threshold (Seconds)</label>
+                                <input type="number" id="set-alert-duration" class="form-control" value="10">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="set-camera-device">Vision Sensor Device Router</label>
+                                <select id="set-camera-device" class="form-control">
+                                    <option value="default">Primary Integrated Core Web-Camera</option>
+                                    <option value="virtual" disabled>Virtual Simulation Matrix</option>
+                                </select>
+                            </div>
+                            
+                            <hr class="divider">
+
+                            <div class="toggle-group">
+                                <label class="toggle-container">
+                                    <input type="checkbox" id="set-toggle-notifications" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <div>
+                                    <span class="toggle-label">System Audio Notifications</span>
+                                    <p class="text-muted" style="margin: 0; font-size: 12px;">Emits systemic frequencies upon focus loss anomalies.</p>
+                                </div>
+                            </div>
+
+                            <div class="toggle-group">
+                                <label class="toggle-container">
+                                    <input type="checkbox" id="set-toggle-persistence" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <div>
+                                    <span class="toggle-label">Session Profiling Storage</span>
+                                    <p class="text-muted" style="margin: 0; font-size: 12px;">Persist session report datasets directly to internal browser infrastructure.</p>
+                                </div>
+                            </div>
+
+                            <button type="button" id="btn-save-settings" class="btn btn-primary" style="margin-top: 16px; width: 100%;">Save Configuration to Engine</button>
+                        </form>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
